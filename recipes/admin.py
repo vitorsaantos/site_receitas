@@ -1,7 +1,14 @@
 from django.contrib import admin
-from .models import Category
+from .models import Category, Recipe
+
+
 
 class CategorAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(Recipe)
+class RecipeADmin(admin.ModelAdmin):
     ...
 
 
