@@ -82,7 +82,7 @@ class RegisterForm(forms.ModelForm):
 
         error_messages = {
             'username': {
-                'required': 'This field must not be empety',
+                'required': 'This field must not be empty',
             }
         }
 
