@@ -406,6 +406,26 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--color-debug-light);
     color: var(--color-debug-dark);
   }
+
+/* Authors */
+.login-message {
+    margin: 10px 0;
+}
+
+.authors-dashboard-container {
+    max-width: 640px;
+    text-align: left;
+    padding: var(--spacing-gutter-medium);
+    margin: 0 auto;
+}
+
+.authors-dashboard-container h3,
+.authors-dashboard-container p,
+.authors-dashboard-container ul {
+    list-style-type: none;
+    margin: 10px 0;
+}
+
 /* Generics */
 .center {
     text-align: center;
