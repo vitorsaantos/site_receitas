@@ -78,11 +78,23 @@
     {% if is_detail_page is True %}
     <div class="preparation-steps">
         {% if recipe.preparation_steps_is_html is True %}
-        {{ recipe.preparations_steps|safe }}
+            {{ recipe.preparations_steps|safe }}
         {% else %}
-        {{ recipe.preparations_steps|linebreaksbr }}
+            {{ recipe.preparations_steps|linebreaksbr }}
         {% endif %}
+
+        {% if recipe.tags.all %}
+                <p>
+                    Tags:
+                    {% for tag in recipe.tags.all %}
+                        <a href="{% url 'recipes:tag' tag.slug %}">
+                            {{ tag.name }}
+                        </a>, 
+                    {% endfor %}
+                </p>
+            {% endif %}
+
     </div>
     {% endif %}
-
+    
 </div>
