@@ -1,4 +1,4 @@
-function my_scope() {
+(() => {
     const forms = document.querySelectorAll('.form-delete');
 
     for (const form of forms){
@@ -12,6 +12,7 @@ function my_scope() {
             }
         });
     }
+  })();
 
     (() => {
         const forms = document.querySelectorAll('.form-delete');
@@ -58,6 +59,14 @@ function my_scope() {
         }
       })();
 
-}
-
-my_scope();
+      (() => {
+        const authorsLogoutLinks = document.querySelectorAll('.authors-logout-link');
+        const formLogout = document.querySelector('.form-logout');
+      
+        for (const link of authorsLogoutLinks) {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            formLogout.submit();
+          });
+        }
+      })();
