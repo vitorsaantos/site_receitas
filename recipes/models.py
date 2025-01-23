@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from tag.models import Tag
 from collections import defaultdict
+from django.utils.translation import gettext_lazy as _
 
 class Category(models.Model):
     name = models.CharField(max_length=65)
@@ -12,7 +13,7 @@ class Category(models.Model):
         return self.name
     
 class Recipe(models.Model):
-    title = models.CharField(max_length=65)
+    title = models.CharField(max_length=65, verbose_name=_('title'))
     description = models.CharField(max_length=165)
     slug = models.SlugField(unique=True)
     preparation_time = models.IntegerField()
@@ -62,3 +63,7 @@ class Recipe(models.Model):
 
         if error_messages:
             raise ValueError(error_messages)
+        
+    class Meta:
+        verbose_name = _('Recipe')
+        verbose_name_plural = _('Recipes')
