@@ -10,6 +10,10 @@ from django.conf import settings
 from PIL import Image
 from django.db.models import F, Value
 from django.db.models.functions import Concat
+from django.core.exceptions import ValidationError
+from random import SystemRandom
+import string
+
 
 class Category(models.Model):
     name = models.CharField(max_length=65)
@@ -84,8 +88,13 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug = f'{slugify(self.title)}'
-            self.slug = slug
+            rand_letters = ''.join(
+                SystemRandom().choices(
+                    string.ascii_letters + string.digits,
+                    k=5,
+                )
+            )
+            self.slug = slugify(f'{self.title}-{rand_letters}')
 
         saved = super().save(*args, **kwargs)
 
@@ -102,7 +111,7 @@ class Recipe(models.Model):
 
         recipe_from_db = Recipe.objects.filter(
             title__iexact=self.title
-        ).first
+        ).first()
 
         if recipe_from_db:
             if recipe_from_db.pk != self.pk:
@@ -111,7 +120,7 @@ class Recipe(models.Model):
                 )
 
         if error_messages:
-            raise ValueError(error_messages)
+            raise ValidationError(error_messages)
         
     class Meta:
         verbose_name = _('Recipe')
