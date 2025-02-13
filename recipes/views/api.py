@@ -5,6 +5,7 @@ from tag.models import Tag
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
+
 from ..models import Recipe
 from ..serializers import RecipeSerializer, TagSerializer
 
@@ -15,6 +16,18 @@ class RecipeAPIV2ViewSet(ModelViewSet):
     queryset = Recipe.objects.get_published()
     serializer_class = RecipeSerializer
     pagination_class = RecipeAPIv2Pagination
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        
+        category_id = self.request.query_params.get('category_id', '')
+
+        if category_id != '' and category_id.isnumeric():
+            qs = qs.filter(category__id=category_id)
+
+        
+
+        return qs
 
     def partial_update(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
